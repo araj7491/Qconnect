@@ -1,12 +1,15 @@
-# React + Vite
+# Qconnect - React Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Qconnect is a platform that enables students to connect, collaborate, and share academic resources. This React version of Qconnect modernizes the interface and brings component-based architecture for maintainability and scalability.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎬 Hero section with a looping background video and typing animation
+- 🧭 Navigation bar with logo and section links
+- 📦 Feature highlights with icons and descriptions
+- ❓ Interactive FAQ section using simple toggle functionality
+- 🦶 Footer section
+- 💅 Styled with external CSS
+- 🔄 Clean component-based React structure
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
