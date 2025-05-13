@@ -1,19 +1,18 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/index"; // Your index/landing page component
+import Login from "./pages/Login";
 import './styles.css';
-import IndexPage from './pages/index.jsx'; // Import your main page
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      {/* Your QConnect Homepage */}
-      <IndexPage />
-
-      
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        {/* Add other routes here */}
+      </Routes>
+    </Router>
   );
 }
 

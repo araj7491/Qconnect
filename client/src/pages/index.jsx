@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import "../styles.css";
 
 export default function IndexPage() {
   // Typing Animation with cursor
@@ -72,16 +74,24 @@ export default function IndexPage() {
   return (
     <>
       {/* Navigation Bar */}
-      <nav>
-        <div className="nav-left">
-          <a href="#">Home</a>
-          <a href="#features">Features</a>
-          <a href="#faqs">FAQs</a>
-        </div>
-        <div className="nav-center">
-          <a href="#" onClick={() => window.location.reload()}>
-            <img src="/images/logo.png" alt="Logo" className="logo" />
-          </a>
+      <nav className="qconnect-navbar">
+        <div className="nav-content">
+          <div className="nav-left">
+            <a href="#">Home</a>
+            <a href="#features">Features</a>
+            <a href="#faqs">FAQs</a>
+          </div>
+          <div className="nav-center">
+            <a
+              href="/"
+              onClick={e => {
+                e.preventDefault();
+                window.location.href = "/";
+              }}
+            >
+              <img src="/images/logo.png" alt="Logo" className="logo-centered" />
+            </a>
+          </div>
         </div>
       </nav>
 
@@ -91,16 +101,30 @@ export default function IndexPage() {
           <source src="/media/banner.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="overlay">
-          <h1 className="title-wrapper">
-            <span ref={mainTitleRef} className="typing-text"></span>
-            {mainTitleTyping && <span className="cursor main-cursor"></span>}
+        <div className="overlay flex flex-col justify-center items-center text-center z-10">
+          <h1
+            className="title-wrapper text-white font-extrabold tracking-tight text-4xl md:text-6xl lg:text-7xl leading-tight drop-shadow-lg"
+            style={{ fontFamily: "'Inter', sans-serif", marginBottom: '0.05em' }}
+          >
+            <span
+              ref={mainTitleRef}
+              className={`typing-text${!mainTitleTyping ? ' typing-complete' : ''}`}
+            ></span>
           </h1>
-          <p className="tagline-wrapper">
-            <span ref={taglineRef} className="typing-text"></span>
-            {taglineTyping && <span className="cursor tagline-cursor"></span>}
+          <p
+            className="tagline-wrapper text-white font-extrabold text-2xl md:text-4xl lg:text-5xl leading-snug drop-shadow-lg"
+            style={{ fontFamily: "'Inter', sans-serif", marginBottom: '1.5rem', marginTop: '-0.2em' }}
+          >
+            <span
+              ref={taglineRef}
+              className={`typing-text${!taglineTyping ? ' typing-complete' : ''}`}
+            ></span>
           </p>
-          <a href="/login" className="cta-button">Get Started</a>
+          <div style={{ marginBottom: '2.5rem' }}>
+            <Link to="/login" className="cta-button shadow-lg hover:scale-105 transition-transform duration-200">
+              Get Started
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -156,8 +180,6 @@ export default function IndexPage() {
       <footer>
         <p>&copy; 2025 Qconnect. All rights reserved.</p>
       </footer>
-
-     
     </>
   );
 }

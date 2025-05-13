@@ -1,20 +1,59 @@
 /* Import Google Font for a professional look */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
-*
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #ffffff;
+    color: #333;
+}
 
 /* Navigation Bar */
-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 50px;
+.qconnect-navbar {
+    position: relative;
     background: #dbe7fa;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
+    min-height: 60px;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    position: relative;
+    height: 60px;
+}
+
+.nav-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+}
+
+.logo-centered {
+    width: 100px;
+    height: auto;
+    display: block;
 }
 
 .nav-left a {
@@ -28,15 +67,17 @@ nav {
     color: #007bff;
 }
 
-.nav-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+.nav-right .login-btn {
+    padding: 8px 16px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
 }
 
-.nav-center .logo {
-    height: auto; 
-    width: 100px;
+.nav-right .login-btn:hover {
+    background: #0056b3;
 }
 
 /* Header Section */
@@ -92,7 +133,7 @@ header {
     transform: scale(1.05);
 }
 
-/* Features Section (Updated heading size) */
+/* Features Section */
 .features {
     text-align: center;
     padding: 80px 20px;
@@ -100,7 +141,7 @@ header {
 }
 
 .features h2 {
-    font-size: 2.5rem; /* Increased size to match FAQs */
+    font-size: 2.5rem;
     color: #333;
     margin-bottom: 40px;
 }
@@ -141,47 +182,8 @@ header {
     font-size: 0.75rem;
     color: #555;
 }
- /* Add CSS for cursor */
- 
-    .title-wrapper, .tagline-wrapper {
-      display: inline-flex;
-      position: relative;
-      align-items: center;
-    }
-    
-    /* Keep all original styling for h1 and p */
-    .title-wrapper {
-      margin: 0;
-      padding: 0;
-    }
-    
-    .tagline-wrapper {
-      margin: 0;
-      padding: 0;
-    }
-    
-    .cursor {
-      display: inline-block;
-      width: 2px;
-      background-color: #fff;
-      margin-left: 2px;
-      animation: blink 0.7s infinite;
-    }
-    
-    .main-cursor {
-      height: 1.2em; /* Match the h1 height */
-    }
-    
-    .tagline-cursor {
-      height: 1em; /* Match the p height */
-    }
-    
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-  
-/* FAQ Section (Newly Added) */
+
+/* FAQ Section */
 .faq-section {
     padding: 80px 20px;
     background: #f9f9f9;
@@ -189,7 +191,7 @@ header {
 }
 
 .faq-section h2 {
-    font-size: 2.5rem; /* Same size as Features heading */
+    font-size: 2.5rem;
     color: #333;
     margin-bottom: 40px;
 }
@@ -220,10 +222,31 @@ header {
 
 .faq-answer {
     display: none;
-    padding: 0 18px 18px; /* More space between question and answer */
+    padding: 0 18px 18px;
     font-size: 1rem;
     color: #555;
     line-height: 1.6;
+}
+
+/* Typing effect styles with thinner cursor */
+.typing-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 0.05em solid rgba(255, 255, 255, 0.5); /* Thin, light cursor */
+    margin: 0 auto;
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+/* Class to remove the cursor after typing is complete */
+.typing-complete {
+    border-right: none;
+    animation: none;
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: rgba(255, 255, 255, 0.5) }
 }
 
 /* Footer */
@@ -232,4 +255,205 @@ footer {
     padding: 20px;
     background: #333;
     color: white;
+}
+
+/* Login/Signup Page Styling */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #dbe7fa;
+    padding: 20px;
+}
+
+.login-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.login-logo {
+    width: 90px;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+.login-header h2 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.login-header p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+.social-login {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.social-btn {
+    flex: 1;
+    background: #f1f1f1;
+    border: none;
+    padding: 10px;
+    margin: 0 5px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.social-btn:hover {
+    background: #e2e2e2;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #ddd;
+}
+
+.divider span {
+    padding: 0 10px;
+    color: #888;
+    font-size: 0.8rem;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    margin-bottom: 20px;
+}
+
+.options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: #11eaf1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.sign-in-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #e68900;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-bottom: 15px;
+}
+
+.sign-in-btn:hover {
+    background-color: #11eaf1;
+}
+
+.signup-text {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.signup-text a {
+    color: #11eaf1;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
+}
+
+/* Interests container for Create Account */
+.interests-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.interests-container input[type="checkbox"] {
+  display: none;
+}
+
+.interests-container label {
+  background: #f1f1f1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s, color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  text-align: center;
+}
+
+.interests-container label:hover {
+  background: #e0e0e0;
+}
+
+.interests-container input[type="checkbox"]:checked + label {
+  background: #11eaf1;
+  color: white;
+}
+
+.note {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 5px;
 }
