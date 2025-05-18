@@ -2,7 +2,7 @@
 
 **Qconnect** is a peer-to-peer collaborative learning platform designed to enhance academic interaction among students. Built for real-time collaboration, it enables students to form study groups, engage in meaningful Q&A, share academic resources, and work together on assignments and projects.
 
-🔗 **Live Website:** [https://fancy-sunshine-65bb8b.netlify.app/](https://qconnect-seven.vercel.app/)
+🔗 **Live Website:** [Website link](https://qconnect-seven.vercel.app/)
 
 ---
 
