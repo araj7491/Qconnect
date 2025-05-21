@@ -2,17 +2,18 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface User {
   id: string;
+  username: string;
   email: string;
-  name: string;
   avatar?: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  loading: boolean;
+  isAuthenticated: boolean;
+  isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string) => Promise<void>;
-  logout: () => Promise<void>;
+  register: (username: string, email: string, password: string) => Promise<void>;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,77 +28,85 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check if user is logged in (e.g., check localStorage or session)
-    const checkAuth = async () => {
-      try {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
-        }
-      } catch (error) {
-        console.error('Error checking auth:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
+    // Check localStorage for saved user data
+    const savedUser = localStorage.getItem('qconnect_user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+      setIsAuthenticated(true);
+    }
+    setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
+    setIsLoading(true);
     try {
-      // TODO: Implement actual login logic with your backend
-      const mockUser = {
-        id: '1',
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Mock user data
+      const userData = {
+        id: '123456',
+        username: email.split('@')[0],
         email,
-        name: 'Test User',
-        avatar: 'https://via.placeholder.com/150',
+        avatar: 'https://i.pravatar.cc/150?u=' + email,
       };
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      
+      setUser(userData);
+      setIsAuthenticated(true);
+      localStorage.setItem('qconnect_user', JSON.stringify(userData));
     } catch (error) {
       console.error('Login error:', error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const register = async (email: string, password: string, name: string) => {
+  const register = async (username: string, email: string, password: string) => {
+    setIsLoading(true);
     try {
-      // TODO: Implement actual registration logic with your backend
-      const mockUser = {
-        id: '1',
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Mock user data
+      const userData = {
+        id: '123456',
+        username,
         email,
-        name,
-        avatar: 'https://via.placeholder.com/150',
+        avatar: 'https://i.pravatar.cc/150?u=' + email,
       };
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      
+      setUser(userData);
+      setIsAuthenticated(true);
+      localStorage.setItem('qconnect_user', JSON.stringify(userData));
     } catch (error) {
       console.error('Registration error:', error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const logout = async () => {
-    try {
-      setUser(null);
-      localStorage.removeItem('user');
-    } catch (error) {
-      console.error('Logout error:', error);
-      throw error;
-    }
+  const logout = () => {
+    setUser(null);
+    setIsAuthenticated(false);
+    localStorage.removeItem('qconnect_user');
   };
 
-  const value = {
-    user,
-    loading,
-    login,
-    register,
-    logout,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ 
+      user, 
+      isAuthenticated,
+      isLoading, 
+      login, 
+      register, 
+      logout 
+    }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

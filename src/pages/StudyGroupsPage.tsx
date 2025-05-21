@@ -1,114 +1,251 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Plus, Users, BookOpen, MessageSquare } from 'lucide-react';
+import Card, { CardBody, CardHeader, CardFooter } from '../components/ui/Card';
 import Button from '../components/ui/Button';
-import Card, { CardBody } from '../components/ui/Card';
+import { Users, Search, Filter, Plus, Star, ArrowUpRight, BookOpen } from 'lucide-react';
+
+const CATEGORIES = [
+  'All Categories',
+  'Computer Science',
+  'Mathematics',
+  'Physics',
+  'Biology',
+  'Chemistry',
+  'Engineering',
+  'Literature',
+  'History',
+  'Economics',
+  'Psychology',
+];
+
+interface StudyGroup {
+  id: string;
+  name: string;
+  category: string;
+  members: number;
+  topics: number;
+  description: string;
+  rating: number;
+  isJoined: boolean;
+}
+
+const STUDY_GROUPS: StudyGroup[] = [
+  {
+    id: '1',
+    name: 'Algorithms & Data Structures',
+    category: 'Computer Science',
+    members: 256,
+    topics: 45,
+    description: 'A collaborative group for learning and discussing algorithms and data structures concepts.',
+    rating: 4.8,
+    isJoined: true,
+  },
+  {
+    id: '2',
+    name: 'Calculus Help Center',
+    category: 'Mathematics',
+    members: 189,
+    topics: 32,
+    description: 'Get help with calculus problems, derivatives, integrals, and more.',
+    rating: 4.6,
+    isJoined: false,
+  },
+  {
+    id: '3',
+    name: 'Physics Enthusiasts',
+    category: 'Physics',
+    members: 143,
+    topics: 28,
+    description: 'Explore physics concepts from mechanics to quantum physics with fellow enthusiasts.',
+    rating: 4.7,
+    isJoined: true,
+  },
+  {
+    id: '4',
+    name: 'Web Development Club',
+    category: 'Computer Science',
+    members: 312,
+    topics: 56,
+    description: 'Learn and collaborate on web development projects, from frontend to backend.',
+    rating: 4.9,
+    isJoined: false,
+  },
+  {
+    id: '5',
+    name: 'Organic Chemistry Study Group',
+    category: 'Chemistry',
+    members: 128,
+    topics: 24,
+    description: 'Master organic chemistry concepts through collaborative discussions and problem-solving.',
+    rating: 4.5,
+    isJoined: false,
+  },
+  {
+    id: '6',
+    name: 'Literary Analysis Circle',
+    category: 'Literature',
+    members: 97,
+    topics: 35,
+    description: 'Discuss and analyze classic and contemporary literature from around the world.',
+    rating: 4.4,
+    isJoined: false,
+  },
+];
 
 const StudyGroupsPage: React.FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState('All Categories');
   const [searchQuery, setSearchQuery] = useState('');
+  const [groups, setGroups] = useState(STUDY_GROUPS);
 
-  const studyGroups = [
-    {
-      id: 1,
-      name: 'Computer Science Fundamentals',
-      description: 'A group for discussing core CS concepts and problem-solving strategies.',
-      members: 45,
-      topics: 12,
-      icon: <BookOpen className="text-primary-500" size={24} />,
-    },
-    {
-      id: 2,
-      name: 'Data Structures & Algorithms',
-      description: 'Deep dive into DSA concepts, practice problems, and interview preparation.',
-      members: 78,
-      topics: 24,
-      icon: <MessageSquare className="text-primary-500" size={24} />,
-    },
-    {
-      id: 3,
-      name: 'Web Development',
-      description: 'Learn and discuss modern web development technologies and best practices.',
-      members: 92,
-      topics: 31,
-      icon: <Users className="text-primary-500" size={24} />,
-    },
-  ];
+  const filteredGroups = groups.filter(group => {
+    const matchesCategory = selectedCategory === 'All Categories' || group.category === selectedCategory;
+    const matchesSearch = group.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          group.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const toggleJoin = (id: string) => {
+    setGroups(groups.map(group => 
+      group.id === id ? { ...group, isJoined: !group.isJoined } : group
+    ));
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-neutral-900 mb-2">Study Groups</h1>
-            <p className="text-neutral-600">
-              Join study groups to collaborate with peers and enhance your learning.
-            </p>
-          </div>
-          <Button
-            variant="primary"
-            className="mt-4 md:mt-0"
-            onClick={() => {/* TODO: Implement create group */}}
-          >
-            <Plus size={20} className="mr-2" />
-            Create Group
-          </Button>
-        </div>
+    <div className="bg-neutral-50 min-h-screen py-8">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <motion.div 
+          className="mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-3xl font-bold text-neutral-900 mb-2">Study Groups</h1>
+          <p className="text-neutral-600">
+            Connect with peers, share knowledge, and collaborate on academic topics.
+          </p>
+        </motion.div>
 
-        {/* Search Bar */}
-        <div className="relative mb-8">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="text-neutral-400" size={20} />
+        {/* Actions Row */}
+        <motion.div 
+          className="mb-6 flex flex-col md:flex-row gap-4 items-center justify-between"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <div className="relative flex-grow max-w-md">
+            <input
+              type="text"
+              placeholder="Search study groups..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 pr-4 py-2 w-full rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"
+            />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500" size={18} />
           </div>
-          <input
-            type="text"
-            placeholder="Search study groups..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="block w-full pl-10 pr-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-          />
-        </div>
-
-        {/* Study Groups Grid */}
+          
+          <div className="flex gap-3 w-full md:w-auto">
+            <Button 
+              variant="outline" 
+              className="flex items-center gap-2"
+            >
+              <Filter size={16} />
+              <span>Filter</span>
+            </Button>
+            <Button 
+              className="flex items-center gap-2"
+            >
+              <Plus size={16} />
+              <span>Create Group</span>
+            </Button>
+          </div>
+        </motion.div>
+        
+        {/* Category Selection */}
+        <motion.div 
+          className="mb-8 overflow-x-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <div className="flex space-x-2 pb-2">
+            {CATEGORIES.map((category, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
+                  selectedCategory === category
+                    ? 'bg-primary-600 text-white'
+                    : 'bg-white text-neutral-700 hover:bg-neutral-100'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+        
+        {/* Groups Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {studyGroups.map((group, index) => (
+          {filteredGroups.map((group, index) => (
             <motion.div
               key={group.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: 0.2 + (index * 0.05) }}
             >
-              <Card hover>
-                <CardBody>
-                  <div className="flex items-start justify-between">
-                    <div className="p-3 bg-primary-50 rounded-lg">
-                      {group.icon}
-                    </div>
-                    <Button variant="ghost" size="sm">
-                      Join
-                    </Button>
+              <Card hover className="h-full flex flex-col">
+                <CardHeader className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-lg font-semibold">{group.name}</h3>
+                    <p className="text-sm text-primary-600">{group.category}</p>
                   </div>
-                  <h3 className="text-xl font-semibold text-neutral-900 mt-4 mb-2">
-                    {group.name}
-                  </h3>
-                  <p className="text-neutral-600 mb-4">
-                    {group.description}
-                  </p>
-                  <div className="flex items-center text-sm text-neutral-500">
-                    <Users size={16} className="mr-1" />
-                    <span className="mr-4">{group.members} members</span>
-                    <MessageSquare size={16} className="mr-1" />
-                    <span>{group.topics} topics</span>
+                  <span className="flex items-center text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                    <Star size={14} className="mr-1" />
+                    {group.rating}
+                  </span>
+                </CardHeader>
+                <CardBody className="flex-grow">
+                  <p className="text-neutral-600 mb-4">{group.description}</p>
+                  <div className="flex justify-between text-sm text-neutral-500 mb-2">
+                    <span className="flex items-center">
+                      <Users size={16} className="mr-1" />
+                      {group.members} members
+                    </span>
+                    <span className="flex items-center">
+                      <BookOpen size={16} className="mr-1" />
+                      {group.topics} topics
+                    </span>
                   </div>
                 </CardBody>
+                <CardFooter className="flex justify-between items-center">
+                  <Button 
+                    variant={group.isJoined ? 'outline' : 'primary'}
+                    onClick={() => toggleJoin(group.id)}
+                  >
+                    {group.isJoined ? 'Leave Group' : 'Join Group'}
+                  </Button>
+                  <Button 
+                    variant="text" 
+                    className="flex items-center gap-1"
+                  >
+                    <span>View</span>
+                    <ArrowUpRight size={16} />
+                  </Button>
+                </CardFooter>
               </Card>
             </motion.div>
           ))}
         </div>
-      </motion.div>
+        
+        {filteredGroups.length === 0 && (
+          <div className="text-center py-12">
+            <h3 className="text-lg font-medium text-neutral-900 mb-2">No study groups found</h3>
+            <p className="text-neutral-600 mb-6">Try adjusting your filters or create a new group.</p>
+            <Button>Create New Study Group</Button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

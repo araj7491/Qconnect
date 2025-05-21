@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Search, Menu, X, Bell, MessageSquare, User } from 'lucide-react';
-import { twMerge } from 'tailwind-merge';
-import Button from '../ui/Button';
 import Logo from '../ui/Logo';
 
 const Navbar: React.FC = () => {
@@ -26,16 +24,6 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(false);
   }, [location]);
 
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
-
-  const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/study-groups', label: 'Study Groups' },
-    { path: '/forum', label: 'Forum' },
-  ];
-
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
@@ -48,25 +36,35 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <Logo className="h-8 w-auto" />
+            <Logo />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={twMerge(
-                  'text-sm font-medium transition-colors',
-                  isActive(link.path)
-                    ? 'text-primary-600'
-                    : 'text-neutral-600 hover:text-primary-600'
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link 
+              to="/" 
+              className="text-neutral-800 hover:text-primary-600 font-medium transition-colors"
+            >
+              Home
+            </Link>
+            <Link 
+              to="/study-groups" 
+              className="text-neutral-800 hover:text-primary-600 font-medium transition-colors"
+            >
+              Study Groups
+            </Link>
+            <Link 
+              to="/forum" 
+              className="text-neutral-800 hover:text-primary-600 font-medium transition-colors"
+            >
+              Forums
+            </Link>
+            <Link 
+              to="/resources" 
+              className="text-neutral-800 hover:text-primary-600 font-medium transition-colors"
+            >
+              Resources
+            </Link>
           </nav>
 
           {/* Search and Auth Actions */}
@@ -115,15 +113,14 @@ const Navbar: React.FC = () => {
               </div>
             ) : (
               <div className="flex items-center space-x-3">
-                <Link to="/login">
-                  <Button variant="ghost" size="sm">
-                    Log in
-                  </Button>
+                <Link to="/login" className="text-primary-600 hover:text-primary-700 font-medium">
+                  Log in
                 </Link>
-                <Link to="/register">
-                  <Button variant="primary" size="sm">
-                    Sign up
-                  </Button>
+                <Link 
+                  to="/register" 
+                  className="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                >
+                  Sign up
                 </Link>
               </div>
             )}
@@ -152,20 +149,30 @@ const Navbar: React.FC = () => {
           </div>
 
           <nav className="flex flex-col space-y-3">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={twMerge(
-                  'text-neutral-800 hover:text-primary-600 font-medium transition-colors py-2',
-                  isActive(link.path)
-                    ? 'text-primary-600'
-                    : ''
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
+            <Link 
+              to="/" 
+              className="text-neutral-800 hover:text-primary-600 font-medium transition-colors py-2"
+            >
+              Home
+            </Link>
+            <Link 
+              to="/study-groups" 
+              className="text-neutral-800 hover:text-primary-600 font-medium transition-colors py-2"
+            >
+              Study Groups
+            </Link>
+            <Link 
+              to="/forum" 
+              className="text-neutral-800 hover:text-primary-600 font-medium transition-colors py-2"
+            >
+              Forums
+            </Link>
+            <Link 
+              to="/resources" 
+              className="text-neutral-800 hover:text-primary-600 font-medium transition-colors py-2"
+            >
+              Resources
+            </Link>
           </nav>
 
           {isAuthenticated ? (

@@ -4,87 +4,129 @@ import Logo from '../ui/Logo';
 import { Facebook, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const footerLinks = {
-    product: [
-      { label: 'Features', href: '/features' },
-      { label: 'Study Groups', href: '/study-groups' },
-      { label: 'Forum', href: '/forum' },
-      { label: 'Resources', href: '/resources' },
-    ],
-    company: [
-      { label: 'About', href: '/about' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'Contact', href: '/contact' },
-    ],
-    legal: [
-      { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Terms of Service', href: '/terms' },
-      { label: 'Cookie Policy', href: '/cookies' },
-    ],
-  };
-
   return (
-    <footer className="bg-neutral-50 border-t border-neutral-200">
-      <div className="container mx-auto px-4 py-12">
+    <footer className="bg-neutral-900 text-white pt-12 pb-8">
+      <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2">
-            <Logo className="mb-4" />
-            <p className="text-neutral-600 max-w-md">
-              Qconnect is a collaborative learning platform that helps students connect, share knowledge, and grow together.
-            </p>
-          </div>
-
           <div>
-            <h3 className="font-semibold text-neutral-900 mb-4">Product</h3>
+            <Link to="/" className="inline-block mb-4">
+              <Logo variant="light" />
+            </Link>
+            <p className="text-neutral-400 mb-4">
+              Qconnect is a peer-to-peer collaborative learning platform designed to revolutionize how students interact, share knowledge, and grow academically.
+            </p>
+            <div className="flex space-x-4">
+              <a href="#" className="text-neutral-400 hover:text-white transition-colors">
+                <Facebook size={20} />
+              </a>
+              <a href="#" className="text-neutral-400 hover:text-white transition-colors">
+                <Twitter size={20} />
+              </a>
+              <a href="#" className="text-neutral-400 hover:text-white transition-colors">
+                <Instagram size={20} />
+              </a>
+              <a href="#" className="text-neutral-400 hover:text-white transition-colors">
+                <Linkedin size={20} />
+              </a>
+              <a href="#" className="text-neutral-400 hover:text-white transition-colors">
+                <Github size={20} />
+              </a>
+            </div>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Platform</h3>
             <ul className="space-y-2">
-              {footerLinks.product.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-neutral-600 hover:text-primary-600 transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link to="/study-groups" className="text-neutral-400 hover:text-white transition-colors">
+                  Study Groups
+                </Link>
+              </li>
+              <li>
+                <Link to="/forum" className="text-neutral-400 hover:text-white transition-colors">
+                  Forums
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources" className="text-neutral-400 hover:text-white transition-colors">
+                  Resources
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard" className="text-neutral-400 hover:text-white transition-colors">
+                  Dashboard
+                </Link>
+              </li>
             </ul>
           </div>
-
+          
           <div>
-            <h3 className="font-semibold text-neutral-900 mb-4">Company</h3>
+            <h3 className="text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
-              {footerLinks.company.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-neutral-600 hover:text-primary-600 transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link to="/help" className="text-neutral-400 hover:text-white transition-colors">
+                  Help Center
+                </Link>
+              </li>
+              <li>
+                <Link to="/community-guidelines" className="text-neutral-400 hover:text-white transition-colors">
+                  Community Guidelines
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="text-neutral-400 hover:text-white transition-colors">
+                  FAQs
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-neutral-400 hover:text-white transition-colors">
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Legal</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/terms" className="text-neutral-400 hover:text-white transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacy" className="text-neutral-400 hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/cookies" className="text-neutral-400 hover:text-white transition-colors">
+                  Cookie Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/accessibility" className="text-neutral-400 hover:text-white transition-colors">
+                  Accessibility
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
-
-        <div className="mt-12 pt-8 border-t border-neutral-200">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-neutral-600 text-sm">
-              © {new Date().getFullYear()} Qconnect. All rights reserved.
-            </p>
-            <ul className="flex space-x-6 mt-4 md:mt-0">
-              {footerLinks.legal.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-neutral-600 hover:text-primary-600 text-sm transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        
+        <div className="border-t border-neutral-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-neutral-500 text-sm mb-4 md:mb-0">
+            &copy; {new Date().getFullYear()} Qconnect. All rights reserved.
+          </p>
+          <div className="flex space-x-6">
+            <Link to="/terms" className="text-neutral-500 hover:text-white text-sm transition-colors">
+              Terms
+            </Link>
+            <Link to="/privacy" className="text-neutral-500 hover:text-white text-sm transition-colors">
+              Privacy
+            </Link>
+            <Link to="/cookies" className="text-neutral-500 hover:text-white text-sm transition-colors">
+              Cookies
+            </Link>
           </div>
         </div>
       </div>
