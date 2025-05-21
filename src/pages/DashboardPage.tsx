@@ -8,6 +8,13 @@ import { motion } from 'framer-motion';
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
 
+  const stats = [
+    { label: 'Study Groups', value: '3', icon: <Users className="text-primary-500" size={24} /> },
+    { label: 'Active Courses', value: '5', icon: <BookOpen className="text-primary-500" size={24} /> },
+    { label: 'Discussions', value: '12', icon: <MessageSquare className="text-primary-500" size={24} /> },
+    { label: 'Resources', value: '8', icon: <FileText className="text-primary-500" size={24} /> },
+  ];
+
   const recentActivities = [
     { type: 'comment', content: 'Alice replied to your question about calculus', time: '10 minutes ago' },
     { type: 'upvote', content: 'Your answer in "JavaScript Fundamentals" was upvoted', time: '1 hour ago' },
@@ -36,61 +43,170 @@ const DashboardPage: React.FC = () => {
   return (
     <div className="bg-neutral-50 min-h-screen py-8">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1 className="text-2xl font-bold text-neutral-900">Welcome back, {user?.username}!</h1>
-            <p className="text-neutral-500">Here's what's happening in your learning journey.</p>
-          </motion.div>
-          
-          <motion.div 
-            className="flex space-x-2 mt-4 md:mt-0"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="relative">
-              <Bell size={20} />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary-500 rounded-full flex items-center justify-center text-white text-xs">
-                3
-              </span>
-            </div>
-            <Calendar size={20} />
-            <Star size={20} />
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-3xl font-bold text-neutral-900 mb-2">
+            Welcome back, {user?.name}!
+          </h1>
+          <p className="text-neutral-600 mb-8">
+            Here's an overview of your learning journey.
+          </p>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Card>
+                  <CardBody>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-neutral-600">{stat.label}</p>
+                        <p className="text-2xl font-bold text-neutral-900">{stat.value}</p>
+                      </div>
+                      <div className="p-3 bg-primary-50 rounded-lg">
+                        {stat.icon}
+                      </div>
+                    </div>
+                  </CardBody>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Recent Activity */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card>
+              <CardBody>
+                <h2 className="text-xl font-semibold text-neutral-900 mb-4">Recent Activity</h2>
+                <div className="space-y-4">
+                  {recentActivities.map((activity, index) => (
+                    <div key={index} className="flex items-start space-x-4">
+                      <div className="p-2 bg-primary-50 rounded-lg">
+                        {activity.type === 'comment' && <MessageSquare className="text-primary-500" size={20} />}
+                        {activity.type === 'upvote' && <Star className="text-secondary-500" size={20} />}
+                        {activity.type === 'group' && <Users className="text-accent-500" size={20} />}
+                        {activity.type === 'resource' && <FileText className="text-success-500" size={20} />}
+                      </div>
+                      <div>
+                        <p className="text-neutral-900 font-medium">
+                          {activity.content}
+                        </p>
+                        <p className="text-sm text-neutral-600">
+                          {activity.time}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardBody>
+            </Card>
+
+            <Card>
+              <CardBody>
+                <h2 className="text-xl font-semibold text-neutral-900 mb-4">Upcoming Sessions</h2>
+                <div className="space-y-4">
+                  {upcomingEvents.map((event, index) => (
+                    <div key={index} className="flex items-start space-x-4">
+                      <div className="p-2 bg-primary-50 rounded-lg">
+                        <Users className="text-primary-500" size={20} />
+                      </div>
+                      <div>
+                        <p className="text-neutral-900 font-medium">
+                          {event.title}
+                        </p>
+                        <p className="text-sm text-neutral-600">
+                          {event.date}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardBody>
+            </Card>
+          </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Main Content */}
           <div className="md:col-span-2 space-y-6">
-            {/* Stats */}
-            <motion.div 
-              className="grid grid-cols-2 md:grid-cols-4 gap-4"
+            {/* Popular Study Groups */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
             >
-              {[
-                { icon: <Users size={20} />, label: 'Study Groups', value: '5', color: 'bg-primary-500' },
-                { icon: <MessageSquare size={20} />, label: 'Discussions', value: '18', color: 'bg-secondary-500' },
-                { icon: <FileText size={20} />, label: 'Resources', value: '24', color: 'bg-accent-500' },
-                { icon: <Star size={20} />, label: 'Contributions', value: '12', color: 'bg-success-500' },
-              ].map((stat, index) => (
-                <Card key={index}>
-                  <CardBody className="p-4">
-                    <div className={`w-8 h-8 rounded-full ${stat.color} text-white flex items-center justify-center mb-2`}>
-                      {stat.icon}
-                    </div>
-                    <p className="text-neutral-500 text-sm">{stat.label}</p>
-                    <p className="text-2xl font-semibold">{stat.value}</p>
-                  </CardBody>
-                </Card>
-              ))}
+              <Card>
+                <CardHeader className="flex justify-between items-center">
+                  <h2 className="text-lg font-semibold">Popular Study Groups</h2>
+                  <Link to="/study-groups" className="text-sm text-primary-600 hover:text-primary-700">
+                    Browse all
+                  </Link>
+                </CardHeader>
+                <CardBody className="p-0">
+                  <div className="divide-y divide-neutral-200">
+                    {popularGroups.map((group, index) => (
+                      <div key={index} className="p-4 hover:bg-neutral-50">
+                        <div>
+                          <p className="font-medium text-neutral-800">{group.name}</p>
+                          <div className="flex justify-between text-sm text-neutral-500">
+                            <span>{group.members} members</span>
+                            <span>{group.topics} topics</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardBody>
+              </Card>
             </motion.div>
 
+            {/* Saved Resources */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <Card>
+                <CardHeader className="flex justify-between items-center">
+                  <h2 className="text-lg font-semibold">Saved Resources</h2>
+                  <Link to="/resources" className="text-sm text-primary-600 hover:text-primary-700">
+                    View all
+                  </Link>
+                </CardHeader>
+                <CardBody className="p-0">
+                  <div className="divide-y divide-neutral-200">
+                    {savedResources.map((resource, index) => (
+                      <div key={index} className="p-4 hover:bg-neutral-50">
+                        <div className="flex items-start">
+                          <div className="mr-3">
+                            <Bookmark className="text-primary-500" size={18} />
+                          </div>
+                          <div>
+                            <p className="font-medium text-neutral-800">{resource.title}</p>
+                            <div className="flex justify-between text-sm text-neutral-500">
+                              <span>{resource.type}</span>
+                              <span>Saved {resource.saved}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardBody>
+              </Card>
+            </motion.div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
             {/* Recent Activity */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -155,76 +271,6 @@ const DashboardPage: React.FC = () => {
                           <span className={`px-2 py-1 rounded-full text-xs ${event.joined ? 'bg-success-100 text-success-700' : 'bg-neutral-100 text-neutral-700'}`}>
                             {event.joined ? 'Joined' : 'Not joined'}
                           </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardBody>
-              </Card>
-            </motion.div>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Popular Study Groups */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <Card>
-                <CardHeader className="flex justify-between items-center">
-                  <h2 className="text-lg font-semibold">Popular Study Groups</h2>
-                  <Link to="/study-groups" className="text-sm text-primary-600 hover:text-primary-700">
-                    Browse all
-                  </Link>
-                </CardHeader>
-                <CardBody className="p-0">
-                  <div className="divide-y divide-neutral-200">
-                    {popularGroups.map((group, index) => (
-                      <div key={index} className="p-4 hover:bg-neutral-50">
-                        <div>
-                          <p className="font-medium text-neutral-800">{group.name}</p>
-                          <div className="flex justify-between text-sm text-neutral-500">
-                            <span>{group.members} members</span>
-                            <span>{group.topics} topics</span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardBody>
-              </Card>
-            </motion.div>
-
-            {/* Saved Resources */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <Card>
-                <CardHeader className="flex justify-between items-center">
-                  <h2 className="text-lg font-semibold">Saved Resources</h2>
-                  <Link to="/resources" className="text-sm text-primary-600 hover:text-primary-700">
-                    View all
-                  </Link>
-                </CardHeader>
-                <CardBody className="p-0">
-                  <div className="divide-y divide-neutral-200">
-                    {savedResources.map((resource, index) => (
-                      <div key={index} className="p-4 hover:bg-neutral-50">
-                        <div className="flex items-start">
-                          <div className="mr-3">
-                            <Bookmark size={18} className="text-primary-500" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-neutral-800">{resource.title}</p>
-                            <div className="flex justify-between text-sm text-neutral-500">
-                              <span>{resource.type}</span>
-                              <span>Saved {resource.saved}</span>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     ))}

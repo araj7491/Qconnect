@@ -46,7 +46,7 @@ const HomePage: React.FC = () => {
                 Welcome to Qconnect
               </motion.h1>
               <motion.p 
-                className="text-xl text-black/90 mb-8"
+                className="text-xl text-white/90 mb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -248,31 +248,31 @@ const HomePage: React.FC = () => {
               },
               {
                 name: 'Aisha Patel',
-                role: 'Engineering Student',
+                role: 'Mathematics Student',
                 image: 'https://i.pravatar.cc/150?img=5',
-                text: 'As an engineering student, I needed a place to collaborate on projects. Qconnect provided exactly that - now my team can share resources and ideas seamlessly.',
+                text: 'I love how easy it is to find study partners for different subjects. The platform has made group study sessions much more productive and enjoyable.',
               },
             ].map((testimonial, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={testimonialInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 + (index * 0.1) }}
               >
-                <Card hover className="h-full">
+                <Card className="h-full">
                   <CardBody>
                     <div className="flex items-center mb-4">
-                      <img 
-                        src={testimonial.image} 
-                        alt={testimonial.name} 
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
                         className="w-12 h-12 rounded-full mr-4"
                       />
                       <div>
-                        <h4 className="font-semibold">{testimonial.name}</h4>
-                        <p className="text-sm text-neutral-500">{testimonial.role}</p>
+                        <h3 className="font-semibold text-neutral-900">{testimonial.name}</h3>
+                        <p className="text-sm text-neutral-600">{testimonial.role}</p>
                       </div>
                     </div>
-                    <p className="text-neutral-600 italic">"{testimonial.text}"</p>
+                    <p className="text-neutral-600">{testimonial.text}</p>
                   </CardBody>
                 </Card>
               </motion.div>

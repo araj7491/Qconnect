@@ -1,315 +1,171 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import Card, { CardBody, CardHeader } from '../components/ui/Card';
+import { Edit2, Mail, Calendar, BookOpen, Users, MessageSquare, Award, Settings } from 'lucide-react';
 import Button from '../components/ui/Button';
-import { 
-  User, Mail, Award, Calendar, BookOpen, MessageSquare, 
-  FileText, Star, Settings, Edit, ExternalLink 
-} from 'lucide-react';
-
-interface TabProps {
-  label: string;
-  count?: number;
-  active: boolean;
-  onClick: () => void;
-}
-
-const Tab: React.FC<TabProps> = ({ label, count, active, onClick }) => (
-  <button
-    onClick={onClick}
-    className={`px-4 py-2 border-b-2 font-medium ${
-      active 
-        ? 'border-primary-500 text-primary-600' 
-        : 'border-transparent text-neutral-600 hover:text-neutral-900 hover:border-neutral-300'
-    }`}
-  >
-    {label}
-    {count !== undefined && (
-      <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
-        active ? 'bg-primary-100 text-primary-800' : 'bg-neutral-100 text-neutral-700'
-      }`}>
-        {count}
-      </span>
-    )}
-  </button>
-);
+import Card, { CardBody } from '../components/ui/Card';
 
 const ProfilePage: React.FC = () => {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState('overview');
-  
-  const userStats = {
-    posts: 24,
-    comments: 128,
-    groups: 5,
-    resources: 12,
-    contributions: 47,
-    reputation: 780,
-    joined: 'March 2023',
-    badges: [
-      { name: 'Top Contributor', description: 'Awarded for exceptional contributions', icon: 'award' },
-      { name: 'Problem Solver', description: 'Solved 50+ problems', icon: 'check-circle' },
-      { name: 'Helpful Guide', description: 'Provided 100+ helpful answers', icon: 'life-buoy' },
-    ],
-  };
+  const [isEditing, setIsEditing] = useState(false);
+
+  const stats = [
+    { label: 'Study Groups', value: '5', icon: <Users className="text-primary-500" size={24} /> },
+    { label: 'Discussions', value: '23', icon: <MessageSquare className="text-primary-500" size={24} /> },
+    { label: 'Resources', value: '12', icon: <BookOpen className="text-primary-500" size={24} /> },
+    { label: 'Achievements', value: '8', icon: <Award className="text-primary-500" size={24} /> },
+  ];
+
+  const recentActivity = [
+    { type: 'group', content: 'Joined "Advanced Data Structures" study group', time: '2 hours ago' },
+    { type: 'discussion', content: 'Posted in "React Hooks Discussion"', time: '5 hours ago' },
+    { type: 'resource', content: 'Shared "JavaScript Best Practices" document', time: '1 day ago' },
+  ];
 
   return (
-    <div className="bg-neutral-50 min-h-screen py-8">
-      <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         {/* Profile Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Card className="mb-6">
-            <CardBody className="p-6">
-              <div className="flex flex-col md:flex-row items-start md:items-center">
-                <div className="relative mb-4 md:mb-0 md:mr-6">
-                  <img 
-                    src={user?.avatar || 'https://via.placeholder.com/120'} 
-                    alt="Profile" 
-                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-white shadow-md"
-                  />
-                  <button className="absolute bottom-0 right-0 bg-primary-500 text-white p-1.5 rounded-full shadow-sm hover:bg-primary-600 transition-colors">
-                    <Edit size={18} />
-                  </button>
-                </div>
-                
-                <div className="flex-grow">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                    <div>
-                      <h1 className="text-2xl font-bold text-neutral-900">{user?.username}</h1>
-                      <p className="text-neutral-500 flex items-center">
-                        <Mail size={16} className="mr-1" />
-                        {user?.email}
-                      </p>
-                    </div>
-                    
-                    <div className="flex mt-3 md:mt-0 space-x-3">
-                      <Button
-                        variant="outline"
-                        className="flex items-center gap-1"
-                      >
-                        <Settings size={16} />
-                        <span>Edit Profile</span>
-                      </Button>
-                      <Button
-                        className="flex items-center gap-1"
-                      >
-                        <ExternalLink size={16} />
-                        <span>Share Profile</span>
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center p-2 bg-neutral-100 rounded-lg">
-                      <p className="text-sm text-neutral-600">Reputation</p>
-                      <p className="text-xl font-bold text-primary-700">{userStats.reputation}</p>
-                    </div>
-                    <div className="text-center p-2 bg-neutral-100 rounded-lg">
-                      <p className="text-sm text-neutral-600">Contributions</p>
-                      <p className="text-xl font-bold text-primary-700">{userStats.contributions}</p>
-                    </div>
-                    <div className="text-center p-2 bg-neutral-100 rounded-lg">
-                      <p className="text-sm text-neutral-600">Groups</p>
-                      <p className="text-xl font-bold text-primary-700">{userStats.groups}</p>
-                    </div>
-                    <div className="text-center p-2 bg-neutral-100 rounded-lg">
-                      <p className="text-sm text-neutral-600">Joined</p>
-                      <p className="text-xl font-bold text-primary-700">{userStats.joined}</p>
-                    </div>
+        <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="relative">
+              <img
+                src={user?.avatar || 'https://via.placeholder.com/150'}
+                alt={user?.name}
+                className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-md"
+              />
+              <button
+                className="absolute bottom-0 right-0 p-2 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition-colors"
+                onClick={() => {/* TODO: Implement avatar upload */}}
+              >
+                <Edit2 size={16} />
+              </button>
+            </div>
+            <div className="flex-1">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <h1 className="text-3xl font-bold text-neutral-900 mb-2">{user?.name}</h1>
+                  <div className="flex items-center text-neutral-600 space-x-4">
+                    <span className="flex items-center">
+                      <Mail size={16} className="mr-1" />
+                      {user?.email}
+                    </span>
+                    <span className="flex items-center">
+                      <Calendar size={16} className="mr-1" />
+                      Joined January 2024
+                    </span>
                   </div>
                 </div>
+                <Button
+                  variant="outline"
+                  onClick={() => setIsEditing(!isEditing)}
+                  className="flex items-center"
+                >
+                  <Settings size={16} className="mr-2" />
+                  {isEditing ? 'Save Changes' : 'Edit Profile'}
+                </Button>
               </div>
-            </CardBody>
-          </Card>
-        </motion.div>
-        
-        {/* Tabs Navigation */}
-        <motion.div
-          className="border-b border-neutral-200 mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <div className="flex overflow-x-auto">
-            <Tab
-              label="Overview"
-              active={activeTab === 'overview'}
-              onClick={() => setActiveTab('overview')}
-            />
-            <Tab
-              label="Posts"
-              count={userStats.posts}
-              active={activeTab === 'posts'}
-              onClick={() => setActiveTab('posts')}
-            />
-            <Tab
-              label="Comments"
-              count={userStats.comments}
-              active={activeTab === 'comments'}
-              onClick={() => setActiveTab('comments')}
-            />
-            <Tab
-              label="Groups"
-              count={userStats.groups}
-              active={activeTab === 'groups'}
-              onClick={() => setActiveTab('groups')}
-            />
-            <Tab
-              label="Resources"
-              count={userStats.resources}
-              active={activeTab === 'resources'}
-              onClick={() => setActiveTab('resources')}
-            />
+              <p className="mt-4 text-neutral-600">
+                Passionate about learning and sharing knowledge. Currently focused on web development and data structures.
+              </p>
+            </div>
           </div>
-        </motion.div>
-        
-        {/* Tab Content */}
-        {activeTab === 'overview' && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* About */}
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {stats.map((stat, index) => (
             <motion.div
-              className="md:col-span-2"
+              key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="mb-6">
-                <CardHeader>
-                  <h2 className="text-lg font-semibold">About</h2>
-                </CardHeader>
+              <Card>
                 <CardBody>
-                  <p className="text-neutral-600 mb-4">
-                    Computer Science student passionate about web development and AI. 
-                    I enjoy helping others understand complex programming concepts 
-                    and collaborating on interesting projects.
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-neutral-600">{stat.label}</p>
+                      <p className="text-2xl font-bold text-neutral-900">{stat.value}</p>
+                    </div>
+                    <div className="p-3 bg-primary-50 rounded-lg">
+                      {stat.icon}
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column - About & Skills */}
+          <div className="lg:col-span-2 space-y-6">
+            <Card>
+              <CardBody>
+                <h2 className="text-xl font-semibold text-neutral-900 mb-4">About</h2>
+                {isEditing ? (
+                  <textarea
+                    className="w-full p-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    rows={4}
+                    placeholder="Tell us about yourself..."
+                    defaultValue="Passionate about learning and sharing knowledge. Currently focused on web development and data structures."
+                  />
+                ) : (
+                  <p className="text-neutral-600">
+                    Passionate about learning and sharing knowledge. Currently focused on web development and data structures.
                   </p>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h3 className="font-medium mb-2">Interests</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {['Web Development', 'Machine Learning', 'Algorithms', 'Data Science', 'UX Design'].map((tag, i) => (
-                          <span key={i} className="px-3 py-1 bg-primary-100 text-primary-800 rounded-full text-sm">
-                            {tag}
-                          </span>
-                        ))}
+                )}
+              </CardBody>
+            </Card>
+
+            <Card>
+              <CardBody>
+                <h2 className="text-xl font-semibold text-neutral-900 mb-4">Skills & Interests</h2>
+                <div className="flex flex-wrap gap-2">
+                  {['JavaScript', 'React', 'TypeScript', 'Node.js', 'Data Structures', 'Algorithms'].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </CardBody>
+            </Card>
+          </div>
+
+          {/* Right Column - Recent Activity */}
+          <div>
+            <Card>
+              <CardBody>
+                <h2 className="text-xl font-semibold text-neutral-900 mb-4">Recent Activity</h2>
+                <div className="space-y-4">
+                  {recentActivity.map((activity, index) => (
+                    <div key={index} className="flex items-start space-x-3">
+                      <div className="p-2 bg-primary-50 rounded-lg">
+                        {activity.type === 'group' && <Users className="text-primary-500" size={16} />}
+                        {activity.type === 'discussion' && <MessageSquare className="text-primary-500" size={16} />}
+                        {activity.type === 'resource' && <BookOpen className="text-primary-500" size={16} />}
+                      </div>
+                      <div>
+                        <p className="text-neutral-900">{activity.content}</p>
+                        <p className="text-sm text-neutral-500">{activity.time}</p>
                       </div>
                     </div>
-                    
-                    <div>
-                      <h3 className="font-medium mb-2">Skills</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {['JavaScript', 'Python', 'React', 'Node.js', 'SQL', 'Git'].map((tag, i) => (
-                          <span key={i} className="px-3 py-1 bg-neutral-100 text-neutral-800 rounded-full text-sm">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-              
-              {/* Recent Activity */}
-              <Card>
-                <CardHeader className="flex justify-between items-center">
-                  <h2 className="text-lg font-semibold">Recent Activity</h2>
-                  <Button variant="text" className="text-primary-600">View All</Button>
-                </CardHeader>
-                <CardBody className="p-0">
-                  <div className="divide-y divide-neutral-200">
-                    {[
-                      { icon: <MessageSquare size={16} />, action: 'Answered a question about React hooks', time: '2 hours ago' },
-                      { icon: <BookOpen size={16} />, action: 'Joined the "Advanced JavaScript" study group', time: '1 day ago' },
-                      { icon: <Star size={16} />, action: 'Received 5 upvotes on your calculus solution', time: '2 days ago' },
-                      { icon: <FileText size={16} />, action: 'Shared a resource: "Python Data Science Cheatsheet"', time: '3 days ago' },
-                    ].map((activity, index) => (
-                      <div key={index} className="p-4 flex">
-                        <div className="mr-3 text-primary-500">{activity.icon}</div>
-                        <div>
-                          <p className="text-neutral-800">{activity.action}</p>
-                          <p className="text-neutral-500 text-sm">{activity.time}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardBody>
-              </Card>
-            </motion.div>
-            
-            {/* Sidebar */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              {/* Badges */}
-              <Card className="mb-6">
-                <CardHeader className="flex justify-between items-center">
-                  <h2 className="text-lg font-semibold">Badges</h2>
-                  <Button variant="text" className="text-primary-600">View All</Button>
-                </CardHeader>
-                <CardBody className="p-0">
-                  <div className="divide-y divide-neutral-200">
-                    {userStats.badges.map((badge, index) => (
-                      <div key={index} className="p-4 flex">
-                        <div className="mr-3 bg-yellow-100 text-yellow-700 p-2 rounded-full">
-                          <Award size={16} />
-                        </div>
-                        <div>
-                          <p className="font-medium text-neutral-800">{badge.name}</p>
-                          <p className="text-neutral-500 text-sm">{badge.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardBody>
-              </Card>
-              
-              {/* Study Groups */}
-              <Card>
-                <CardHeader className="flex justify-between items-center">
-                  <h2 className="text-lg font-semibold">Study Groups</h2>
-                  <Button variant="text" className="text-primary-600">View All</Button>
-                </CardHeader>
-                <CardBody className="p-0">
-                  <div className="divide-y divide-neutral-200">
-                    {[
-                      { name: 'Algorithms & Data Structures', members: 256 },
-                      { name: 'Web Development Club', members: 312 },
-                      { name: 'Physics Enthusiasts', members: 143 },
-                    ].map((group, index) => (
-                      <div key={index} className="p-4">
-                        <p className="font-medium text-neutral-800">{group.name}</p>
-                        <p className="text-neutral-500 text-sm">{group.members} members</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardBody>
-              </Card>
-            </motion.div>
+                  ))}
+                </div>
+              </CardBody>
+            </Card>
           </div>
-        )}
-        
-        {activeTab !== 'overview' && (
-          <div className="text-center py-12">
-            <h3 className="text-lg font-medium text-neutral-900 mb-2">
-              Coming Soon
-            </h3>
-            <p className="text-neutral-600 mb-6">
-              This section is under development. Check back later!
-            </p>
-            <Button onClick={() => setActiveTab('overview')}>
-              Go back to Overview
-            </Button>
-          </div>
-        )}
-      </div>
+        </div>
+      </motion.div>
     </div>
   );
 };
