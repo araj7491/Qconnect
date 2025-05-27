@@ -2,20 +2,19 @@
 
 **Qconnect** is a peer-to-peer collaborative learning platform designed to enhance academic interaction among students. Built for real-time collaboration, it enables students to form study groups, engage in meaningful Q&A, share academic resources, and work together on assignments and projects.
 
-🔗 **Live Website:** [Website link](https://qconnect-seven.vercel.app/)
+**Live Website:** [Website link](https://qconnect-seven.vercel.app/)
 
 ---
 
-## 🚩 Problem Statement
+## Problem Statement
 
 Traditional LMS and discussion forums lack real-time, peer-to-peer engagement. Students often struggle to complete assignments or understand concepts due to a lack of structured academic support.
 
 ---
 
-## 💡 Solution
+## Solution
 
 Qconnect offers:
-
 - Structured forums for Q&A and resource sharing
 - Real-time chat and collaborative project features
 - Peer-matching via common academic interests
@@ -23,25 +22,25 @@ Qconnect offers:
 
 ---
 
-## 🧠 Features
+## Features
 
-- 📚 Subject-wise study groups and topic forums
-- 💬 Real-time messaging and discussions
-- 📂 Resource sharing (PDFs, images, notes)
-- 🔍 Smart search and filter
-- 👍 Content voting and review system
-- 🔐 Authentication & moderation
+- Subject-wise study groups and topic forums
+- Real-time messaging and discussions
+- Resource sharing (PDFs, images, notes)
+- Smart search and filter
+- Content voting and review system
+- Authentication & moderation
 
 ---
 
-## 👨‍🎓 User Roles
+## User Roles
 
 - **Learners**: Ask questions, discuss, and download resources
 - **Contributors**: Share knowledge, provide help, and upload material
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend**: HTML, CSS, JavaScript, React.js
 - **Backend**: Node.js, Express.js
@@ -50,29 +49,32 @@ Qconnect offers:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/araj7491/qconnect.git
-   cd qconnect
-   ```
+
+```bash
+git clone https://github.com/araj7491/qconnect.git
+cd qconnect
+```
 
 2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+
+```bash
+npm install
+```
 
 3. **Start the development server**
-   ```bash
-   npm start
-   ```
+
+```bash
+npm start
+```
 
 4. **Visit:** `http://localhost:3000`
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 qconnect/
@@ -87,7 +89,7 @@ qconnect/
 
 ---
 
-## 📊 Use Cases
+## Use Cases
 
 - **Create Account/Login:** Users sign up with email, password, and profile details.
 - **Create Post:** Share text, PDFs, or images with the community.
@@ -97,16 +99,16 @@ qconnect/
 
 ---
 
-## ✅ Benefits
+## Benefits
 
-- 🎯 Improves learning through peer assistance
-- 🧑‍🤝‍🧑 Encourages community-driven knowledge sharing
-- 🔄 Promotes mutual growth and academic bonding
-- 📈 Supports feedback-driven quality control
+- Improves learning through peer assistance
+- Encourages community-driven knowledge sharing
+- Promotes mutual growth and academic bonding
+- Supports feedback-driven quality control
 
 ---
 
-## 🚧 Challenges Tackled
+## Challenges Tackled
 
 - Trust & authenticity with moderation tools
 - Prevention of misinformation & spam
@@ -114,15 +116,13 @@ qconnect/
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the **MIT License**.
 
 ---
 
-## ✍️ Author
+## Author
 
-**Ankit Raj**  
-📫 [GitHub](https://github.com/araj7491)
-
----
+**Ankit Raj**
+[GitHub](https://github.com/araj7491)
