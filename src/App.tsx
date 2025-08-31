@@ -12,6 +12,11 @@ import ForumPage from './pages/ForumPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
+// Public Pages
+import PublicStudyGroupsPage from './pages/PublicStudyGroupsPage';
+import PublicForumPage from './pages/PublicForumPage';
+import PublicResourcesPage from './pages/PublicResourcesPage';
+
 // Layout components
 import Layout from './components/layout/Layout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -25,18 +30,23 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           
+          {/* Public informational pages */}
+          <Route path="study-groups" element={<PublicStudyGroupsPage />} />
+          <Route path="forum" element={<PublicForumPage />} />
+          <Route path="resources" element={<PublicResourcesPage />} />
+          
           {/* Protected routes */}
           <Route path="dashboard" element={
             <ProtectedRoute>
               <DashboardPage />
             </ProtectedRoute>
           } />
-          <Route path="study-groups" element={
+          <Route path="app/study-groups" element={
             <ProtectedRoute>
               <StudyGroupsPage />
             </ProtectedRoute>
           } />
-          <Route path="forum" element={
+          <Route path="app/forum" element={
             <ProtectedRoute>
               <ForumPage />
             </ProtectedRoute>
