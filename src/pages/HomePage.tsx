@@ -669,14 +669,6 @@ const HomePage: React.FC = () => {
             
             <div className="flex flex-wrap gap-4 justify-center mb-8">
               <Link to="/register">
-                <Button 
-                  size="lg" 
-                  variant="primary" 
-                  className="bg-white text-primary-700 hover:bg-neutral-100 px-8 py-4 text-lg shadow-xl hover:shadow-2xl transition-all"
-                >
-                  Start Learning Free
-                  <Sparkles className="ml-2" size={20} />
-                </Button>
               </Link>
               <Link to="/login">
                 <Button 

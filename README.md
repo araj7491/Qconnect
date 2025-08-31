@@ -121,8 +121,3 @@ qconnect/
 This project is licensed under the **MIT License**.
 
 ---
-
-## Author
-
-**Ankit Raj**
-[GitHub](https://github.com/araj7491)
